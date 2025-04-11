@@ -82,7 +82,7 @@ const Dashboard = () => {
               setEditingJob(null);
               setIsFormOpen(true);
             }}
-            className="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
           >
             Add Job
           </button>
@@ -174,7 +174,7 @@ const Dashboard = () => {
               )}
               <button
                 onClick={applyFilters}
-                className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-primary-600"
               >
                 Apply Filters
               </button>

@@ -154,7 +154,7 @@ const FilterComponent = ({ onApplyFilters }) => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="px-4 py-2 bg-gray-500 text-white cursor-pointer rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="px-4 py-2 bg-blue-500 text-white cursor-pointer rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Apply Filters
             </motion.button>
