@@ -23,7 +23,7 @@ export const useJobs = () => {
         const filterOptions = {
           page,
           limit,
-          filters: { ...activeFilters }
+          filters: { ...activeFilters.filters },
         };
         
         result = await filterJobs(filterOptions);
@@ -93,7 +93,7 @@ export const useJobs = () => {
     createJob: handleCreate,
     updateJob: handleUpdate,
     deleteJob: handleDelete,
-    applyFilters,
+    filterJobs:applyFilters,
     clearFilters,
     setPage: (page) => setPagination(prev => ({ ...prev, page })),
   };

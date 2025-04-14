@@ -34,7 +34,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         whileTap={{ scale: 0.95 }}
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 rounded border disabled:opacity-50"
+        className="px-3 py-1 rounded border disabled:opacity-[0.9]"
       >
         Next
       </motion.button>

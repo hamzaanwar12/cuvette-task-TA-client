@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { JobFormModal, Pagination, JobCard } from '../components';
-import { useJobs } from '../hooks/useJobs';
-import { FiFilter, FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import { JobFormModal, Pagination, JobCard } from "../components";
+import { useJobs } from "../hooks/useJobs";
+import { FiFilter, FiChevronDown, FiChevronUp, FiX } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
+import { FilterComponent } from "../components";
 
 const Dashboard = () => {
   const {
@@ -20,54 +21,56 @@ const Dashboard = () => {
   const [editingJob, setEditingJob] = useState(null);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
-    company: '',
-    status: '',
-    startDate: '',
-    endDate: ''
+    company: "",
+    status: "",
+    startDate: "",
+    endDate: "",
   });
   const [activeFilters, setActiveFilters] = useState({});
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
+    setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
   const applyFilters = () => {
     // Only include filled filters
     const filledFilters = Object.fromEntries(
-      Object.entries(filters).filter(([_, value]) => value.trim() !== '')
+      Object.entries(filters).filter(([_, value]) => value.trim() !== "")
     );
-    
+
     setActiveFilters(filledFilters);
-    
+
     // Call API with filters
     filterJobs({
       page: 1, // Reset to page 1 when filtering
       limit: pagination.limit,
-      filters: filledFilters
+      filters: filledFilters,
     });
   };
 
   const clearFilters = () => {
     setFilters({
-      company: '',
-      status: '',
-      startDate: '',
-      endDate: ''
+      company: "",
+      status: "",
+      startDate: "",
+      endDate: "",
     });
     setActiveFilters({});
     filterJobs({ page: 1, limit: pagination.limit, filters: {} });
   };
 
   // Check if any filters are active
-  const hasActiveFilters = Object.values(activeFilters).some(value => value !== '');
+  const hasActiveFilters = Object.values(activeFilters).some(
+    (value) => value !== ""
+  );
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Job Applications</h1>
         <div className="flex space-x-2">
-          <button
+          {/* <button
             onClick={() => setShowFilters(!showFilters)}
             className="px-4 py-2 bg-gray-100 text-gray-800 rounded hover:bg-gray-200 transition flex items-center"
           >
@@ -76,7 +79,7 @@ const Dashboard = () => {
             {hasActiveFilters && (
               <span className="ml-2 w-2 h-2 bg-primary-500 rounded-full"></span>
             )}
-          </button>
+          </button> */}
           <button
             onClick={() => {
               setEditingJob(null);
@@ -91,7 +94,7 @@ const Dashboard = () => {
 
       {/* Minimalist Filter Panel */}
       <AnimatePresence>
-        {showFilters && (
+        {/* {showFilters && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
@@ -180,7 +183,18 @@ const Dashboard = () => {
               </button>
             </div>
           </motion.div>
-        )}
+        )} */}
+
+        <FilterComponent
+          onApplyFilters={(filledFilters) => {
+            setActiveFilters(filledFilters);
+            filterJobs({
+              page: 1,
+              limit: pagination.limit,
+              filters: filledFilters,
+            });
+          }}
+        />
       </AnimatePresence>
 
       {loading && !jobs.length ? (
@@ -191,7 +205,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-sm p-10 text-center">
           <p className="text-gray-600 mb-2">No job applications found.</p>
           {hasActiveFilters && (
-            <button 
+            <button
               onClick={clearFilters}
               className="text-primary-500 hover:underline"
             >
@@ -226,9 +240,8 @@ const Dashboard = () => {
       <JobFormModal
         isOpen={isFormOpen}
         onClose={() => setIsFormOpen(false)}
-        onSubmit={editingJob ? 
-          (data) => updateJob(editingJob._id, data) : 
-          createJob
+        onSubmit={
+          editingJob ? (data) => updateJob(editingJob._id, data) : createJob
         }
         onDelete={deleteJob}
         initialData={editingJob}
